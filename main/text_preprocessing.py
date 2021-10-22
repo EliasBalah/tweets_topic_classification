@@ -86,7 +86,11 @@ class Text_Preprocessor:
         return text
 
     # Preprocessing
+<<<<<<< HEAD
     def preprocessing(self, text:str) -> list:
+=======
+    def preprocessing(self, text:str) -> str:
+>>>>>>> 8d2f70a0f850eec721fc3cf9396cec9903ace912
         # For preprocessing the text, we need to remove all
         # stop words and replace other words by its root (lemma).
         # for that purpose, we take the advantage ofthe NLTK
@@ -131,6 +135,10 @@ class Text_Preprocessor:
             text_words = [word_lemmatizer.lemmatize(word) if '#' not in word else word for word in text_words]
         # if self.bigrams: 
         #     text_words = text_words + [text_words[i] + '_' + text_words[i+1] for i in range(len(text_words)-1)]
+<<<<<<< HEAD
+=======
+        text = ' '.join(text_words)
+>>>>>>> 8d2f70a0f850eec721fc3cf9396cec9903ace912
         return text
             
 
@@ -140,8 +148,12 @@ def main():
     print("##### Testing...!")
     print("Text to be preprocessed:", text)
     preprocessor = Text_Preprocessor(pos_tag=True)
+<<<<<<< HEAD
     text_words = preprocessor.preprocessing(text)
     print("Text after preprocessing:", ' '.join(text_words))
+=======
+    print("Text after preprocessing:", preprocessor.preprocessing(text))
+>>>>>>> 8d2f70a0f850eec721fc3cf9396cec9903ace912
     end_time = time.time()
     execution_time = end_time - start_time
     print(f"Executed in {round(execution_time,3)} seconds.")
