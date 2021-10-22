@@ -93,8 +93,3 @@ class Features_Generator:
         self.test_data = test
         self.text_label = text_label
         return self.generate_features()
-
-
-
-
-    
