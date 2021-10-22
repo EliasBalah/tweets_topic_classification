@@ -137,4 +137,13 @@ def main(): ################################################
     print(f"Executed in {round(execution_time,3)} seconds.")
     ########################################################
 
+    """"
+    Testing...!
+    Text to be preprocessed: #SecKerry: The value of the @StateDept and @USAID is measured, not in dollars, but in terms of our deepest American values.   
+    Text after preprocessing: #seckerry value measure dollar term deepest american value
+    Executed in 6.552 seconds.
+    """
+
+
+
 if __name__ == '__main__': main()
