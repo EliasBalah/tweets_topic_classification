@@ -1,5 +1,5 @@
-main/__pypache__
+main/__pycache__
 *.pyc
 *.pyo
-data/corrected_train.csv
-data/corrected_test.csv
+corrected_train.csv
+corrected_test.csv
