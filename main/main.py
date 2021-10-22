@@ -8,22 +8,22 @@
 
 import time
 import pandas as pd
-from text_preprocessor import preprocessing
+from text_preprocessing import Text_Preprocessor
 
 
 
-def main(): ################################################
+def main():
     start_time = time.time()
-    ########################################################
+
     original_training_data = pd.read_csv('../data/original_train.csv')
-    original_training_data['PreprocessedTweetText'] = original_training_data.TweetText.apply(preprocessing)
+    preprocessor = Text_Preprocessor()
+    original_training_data['PreprocessedTweetText'] = original_training_data.TweetText.apply(preprocessor.preprocessing)
     print(original_training_data)
-    ########################################################
+
     end_time = time.time()
     execution_time = end_time - start_time
     print(f"Executed in {round(execution_time,3)} seconds.")
-    ########################################################
-
+    
     """
                     TweetId     Label                                          TweetText                              PreprocessedTweetText
     0     304271250237304833  Politics  '#SecKerry: The value of the @StateDept and @U...  #seckerry value measure dollar term deepest am...
@@ -39,6 +39,5 @@ def main(): ################################################
     [6525 rows x 4 columns]
     Executed in 138.762 seconds.
     """
-
 
 if __name__ == '__main__': main()
