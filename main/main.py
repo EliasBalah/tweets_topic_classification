@@ -61,7 +61,7 @@ def test():
 
     result['Label'] = np.array(['Politics' if y_testing_predected == 0 else 'Sports' for y_testing_predected in y_testing_pred])
 
-    result.to_csv('../data/original_train.csv')
+    result.to_csv('../data/sample_submission.csv')
 
 
 
