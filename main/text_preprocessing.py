@@ -131,7 +131,7 @@ class Text_Preprocessor:
             text_words = [word_lemmatizer.lemmatize(word) if '#' not in word else word for word in text_words]
         # if self.bigrams: 
         #     text_words = text_words + [text_words[i] + '_' + text_words[i+1] for i in range(len(text_words)-1)]
-        return text
+        return text_words
             
 
 def main():
@@ -145,13 +145,6 @@ def main():
     end_time = time.time()
     execution_time = end_time - start_time
     print(f"Executed in {round(execution_time,3)} seconds.")
-
-    """"
-    ##### Testing...!
-    Text to be preprocessed: #SecKerry: The value of the @StateDept and @USAID is measured, not in dollars, but in terms of our deepest American values.
-    Text after preprocessing: #seckerry value measure dollar term deepest american value
-    Executed in 6.203 seconds.
-    """
 
 if __name__ == '__main__': main()
 

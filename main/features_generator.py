@@ -16,58 +16,60 @@ class Features_Generator:
         self.train_data = None
         self.test_data = None
         self.text_label = None
+        self.minimum = 1
+        self.maximum = 1
     
     def clear(self):
         self.train_data = None
         self.test_data = None
 
-    def count_words(self, data_str:str='train'):
-        if data_str == 'test':
-            words_count = {}
-            for text_words in self.test_data[self.text_label]:
-                for word in text_words:
-                    if word in words_count.keys():
-                        words_count[word] += 1
-                    else:
-                        words_count[word] = 1
-            return words_count
-        else:
-            words_count = {}
-            for text_words in self.train_data[self.text_label]:
-                for word in text_words:
-                    if word in words_count.keys():
-                        words_count[word] += 1
-                    else:
-                        words_count[word] = 1
-            return words_count
-
-    def get_train_test_full_features(self):
-
-        train_features = self.count_words('train')
-        test_features = self.count_words('test')
-
-        for train_word in train_features.keys():
-            if train_word not in test_features.keys():
-                test_features[train_word] = 0
-
-        for testing_word in test_features.keys():
-            if testing_word not in train_features.keys():
-                train_features[testing_word] = 0
-        
-        return train_features, test_features
+    def count_train_words(self):
+        words_count = {}
+        for text_words in self.train_data[self.text_label]:
+            for word in text_words:
+                if word in words_count.keys():
+                    words_count[word] += 1
+                else:
+                    words_count[word] = 1
+        return words_count
+    
+    def count_test_words(self):
+        words_count = {}
+        for text_words in self.test_data[self.text_label]:
+            for word in text_words:
+                if word in words_count.keys():
+                    words_count[word] += 1
+                else:
+                    words_count[word] = 1
+        return words_count
 
     def get_features_names(self):
-        print("Getting features names...")
+        # Initialize features_names with an empty set.
         features_names = set()
-
-        for text_words in self.train_data[self.text_label]:
-                for word in text_words:
+        # When minimum and maximum are default, all words
+        # should be considered as features in train data.
+        if self.minimum == 1 and self.maximum == 1:
+            for text_words in self.train_data[self.text_label]:
+                    for word in text_words:
+                        features_names.add(word)
+        # Otherwise, some words can't be considered as a feature,
+        # either because it appeared only in less than self.minimum
+        # texts or because it appeared in more than self.maximum % of
+        # all texts.
+        else :
+            _min = self.minimum
+            _max = round(self.maximum*len(self.train_data))
+            train_words_count = self.count_words('train')
+            for word, count in train_words_count.itema():
+                if count < _min or count > _max:
                     features_names.add(word)
-
+        # For test data, it's prefered to not ignore too much words.
+        # For that, we will try at first to keep all words as features. 
         for text_words in self.test_data[self.text_label]:
-                for word in text_words:
-                    features_names.add(word)
+            for word in text_words:
+                features_names.add(word)
         return features_names
+            
 
     def generate_features(self):
         features = self.get_features_names()
@@ -88,8 +90,10 @@ class Features_Generator:
         try: return self.train_data, self.test_data
         finally: self.clear()
 
-    def fit(self, train:pd.DataFrame, test:pd.DataFrame, text_label:str):
+    def fit(self, train:pd.DataFrame, test:pd.DataFrame, text_label:str, f_max:float=1, f_min:int=1):
         self.train_data = train
         self.test_data = test
         self.text_label = text_label
+        self.maximum = f_max
+        self.minimum = f_min
         return self.generate_features()
