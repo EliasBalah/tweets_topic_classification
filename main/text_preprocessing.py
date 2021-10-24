@@ -32,6 +32,7 @@ class Text_Preprocessor:
     """
     #nltk.download('stopwords')
     #nltk.download('wordnet')
+    nltk.download('averaged_perceptron_tagger')
 
     def __init__(self, ignore_stopwords=True, pos_tag=False, bigrams=False, ) -> None:
         self.ignore_stopwords = ignore_stopwords

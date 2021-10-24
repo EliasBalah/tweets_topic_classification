@@ -29,7 +29,7 @@ def test():
     print(f"{test_rows} rows x {test_cols} columns")
     # Preprocess all texts stored in both datasets
     print("\n>>> Preprocessing tweets...")
-    text_preprocessor = Text_Preprocessor()
+    text_preprocessor = Text_Preprocessor(pos_tag=True)
     training_data.TweetText = training_data.TweetText.apply(text_preprocessor.preprocessing)
     testing_data.TweetText = testing_data.TweetText.apply(text_preprocessor.preprocessing)
     (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
