@@ -75,7 +75,7 @@ class Text_Preprocessor:
         # numbers and punctuations from the text, and return
         # a list of all words in lower cases.
         text = self.replace_links(text, replace_link_by)
-        text = self.replace_usernames(text, replace_username_by)
+        # text = self.replace_usernames(text, replace_username_by)
         text = self.replace_punctuations_nums(text, replace_num_by, replace_punct_by)
         text = text.lower()
         # NOTE: In our case we are dealing with tweets, means that
@@ -126,9 +126,9 @@ class Text_Preprocessor:
         # probably the most significant word, and hence lemmatize them would
         # be a bad idea.
         if self.pos_tag:
-            text_words = [word_lemmatizer.lemmatize(word, get_POS_tag(word)) if '#' not in word else word for word in text_words]
+            text_words = [word_lemmatizer.lemmatize(word, get_POS_tag(word)) if '#' not in word or '@' not in word else word for word in text_words]
         else:
-            text_words = [word_lemmatizer.lemmatize(word) if '#' not in word else word for word in text_words]
+            text_words = [word_lemmatizer.lemmatize(word) if '#' not in word or '@' not in word else word for word in text_words]
         # if self.bigrams: 
         #     text_words = text_words + [text_words[i] + '_' + text_words[i+1] for i in range(len(text_words)-1)]
         return text_words

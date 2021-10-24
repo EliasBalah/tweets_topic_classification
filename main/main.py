@@ -21,10 +21,10 @@ def test():
     training_data = pd.read_csv('../data/original_train.csv')
     testing_data = pd.read_csv('../data/original_test.csv')
     (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
-    print("train Data:")
+    print("\nTrain Data:")
     print(training_data.head())
     print(f"{train_rows} rows x {train_cols} columns")
-    print("Test Data:")
+    print("\nTest Data:")
     print(testing_data.head())
     print(f"{test_rows} rows x {test_cols} columns")
     # Preprocess all texts stored in both datasets
@@ -33,10 +33,10 @@ def test():
     training_data.TweetText = training_data.TweetText.apply(text_preprocessor.preprocessing)
     testing_data.TweetText = testing_data.TweetText.apply(text_preprocessor.preprocessing)
     (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
-    print("train Data:")
+    print("T\nrain Data:")
     print(training_data.head())
     print(f"{train_rows} rows x {train_cols} columns")
-    print("Test Data:")
+    print("\nTest Data:")
     print(testing_data.head())
     print(f"{test_rows} rows x {test_cols} columns")
     # Extract all possible features
@@ -44,10 +44,10 @@ def test():
     features_generator = Features_Generator()
     training_data, testing_data = features_generator.fit(training_data, testing_data, 'TweetText')
     (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
-    print("train Data:")
+    print("\nTrain Data:")
     print(training_data.head())
     print(f"{train_rows} rows x {train_cols} columns")
-    print("Test Data:")
+    print("\nTest Data:")
     print(testing_data.head())
     print(f"{test_rows} rows x {test_cols} columns")
     # Build the prediction model.
@@ -71,7 +71,7 @@ def test():
     model.fit(X_train, y_train)
     # Printing the score obtained by our model (accuracy).
     score = model.score(X_train, y_train)
-    print("X_train, y_train score is:", score)
+    print("\nX_train, y_train score is:", score)
     # Predicting test data to get a conclusion about
     # how much our model is accurate.
     y_pred = model.predict(X_test)
