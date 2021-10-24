@@ -30,9 +30,9 @@ class Text_Preprocessor:
     - To use nltk.pos_tag:                   >>> nltk.download('averaged_perceptron_tagger')
     - To use Open Multilingual Wordnet:      >>> nltk.download('omw')
     """
-    #nltk.download('stopwords')
-    #nltk.download('wordnet')
-    nltk.download('averaged_perceptron_tagger')
+    # nltk.download('stopwords')
+    # nltk.download('wordnet')
+    # nltk.download('averaged_perceptron_tagger')
 
     def __init__(self, ignore_stopwords=True, pos_tag=False, bigrams=False, ) -> None:
         self.ignore_stopwords = ignore_stopwords
@@ -130,8 +130,8 @@ class Text_Preprocessor:
             text_words = [word_lemmatizer.lemmatize(word, get_POS_tag(word)) if '#' not in word or '@' not in word else word for word in text_words]
         else:
             text_words = [word_lemmatizer.lemmatize(word) if '#' not in word or '@' not in word else word for word in text_words]
-        # if self.bigrams: 
-        #     text_words = text_words + [text_words[i] + '_' + text_words[i+1] for i in range(len(text_words)-1)]
+        if self.bigrams: 
+            text_words = text_words + [text_words[i] + '_' + text_words[i+1] for i in range(len(text_words)-1)]
         return text_words
 
 def test():
