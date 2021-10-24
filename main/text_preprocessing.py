@@ -9,6 +9,7 @@
 # For dealing with regular expressions
 import re
 # For text preprocessing
+import nltk
 from nltk import pos_tag
 from nltk.tokenize import TweetTokenizer
 from nltk.corpus import stopwords, wordnet
@@ -23,18 +24,19 @@ class Text_Preprocessor:
     """
     NOTE: To use this preprocessor, it's mandatory to have already
     downloaded these data in NLTK:
+    - To access stopwords:                   >>> nltk.download('stopwords')
     - To use nltk.wordnet.WordNetLemmatizer: >>> nltk.download('wordnet')
     - To use nltk.tokenize.TweetTokenizer:   >>> nltk.download('punkt')
     - To use nltk.pos_tag:                   >>> nltk.download('averaged_perceptron_tagger')
-    - To access stopwords:                   >>> nltk.download('stopwords')
     - To use Open Multilingual Wordnet:      >>> nltk.download('omw')
     """
+    nltk.download('stopwords')
+    nltk.download('wordnet')
 
     def __init__(self, ignore_stopwords=True, pos_tag=False, bigrams=False, ) -> None:
         self.ignore_stopwords = ignore_stopwords
         self.pos_tag = pos_tag
         self.bigrams = bigrams
-
     # Handle links
     def replace_links(self, text: str, replace_link_by='web_link') -> str:
         # replace_by is the argument used to replace
@@ -42,7 +44,6 @@ class Text_Preprocessor:
         # will be removed from the text [default value].
         text = re.sub('(https?://\S+)', replace_link_by, text)
         return text
-
     # Handle usernames
     def replace_usernames(self, text: str, replace_username_by='') -> str:
         # replace_by is the argument used to replace a
@@ -52,7 +53,6 @@ class Text_Preprocessor:
             text = re.sub('(RT\s@[A-Za-z]+[A-Za-z0-9-_]+)', replace_username_by, text)
         text = re.sub('(@[A-Za-z]+[A-Za-z0-9-_]+)', replace_username_by, text)
         return text
-
     # Handle ponctuations & numbers
     def replace_punctuations_nums(self, text: str, replace_num_by='', replace_punct_by=' ') -> str:
         # replace_num_by is the argument used to replace
@@ -132,16 +132,22 @@ class Text_Preprocessor:
         # if self.bigrams: 
         #     text_words = text_words + [text_words[i] + '_' + text_words[i+1] for i in range(len(text_words)-1)]
         return text_words
-            
 
-def main():
-    start_time = time.time()
+def test():
     text = "#SecKerry: The value of the @StateDept and @USAID is measured, not in dollars, but in terms of our deepest American values."
     print("##### Testing...!")
     print("Text to be preprocessed:", text)
     preprocessor = Text_Preprocessor(pos_tag=True)
     text_words = preprocessor.preprocessing(text)
     print("Text after preprocessing:", ' '.join(text_words))
+
+def main():
+    start_time = time.time()
+    ########################################################
+
+    test()
+
+    ########################################################
     end_time = time.time()
     execution_time = end_time - start_time
     print(f"Executed in {round(execution_time,3)} seconds.")

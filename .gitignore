@@ -1,5 +1,4 @@
 main/__pycache__/
 *.pyc
 *.pyo
-**/corrected_train.csv
-**/corrected_test.csv
+.vscode
