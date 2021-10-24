@@ -5,7 +5,7 @@
  # @ Modified time: 2021-10-22 08:51:45
  # @ Description: @Python :: main
  '''
-
+print("Starting ...")
 import time
 import pandas as pd
 import numpy as np
@@ -20,15 +20,36 @@ def test():
     print("\n>>> Loading datasets...")
     training_data = pd.read_csv('../data/original_train.csv')
     testing_data = pd.read_csv('../data/original_test.csv')
+    (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
+    print("train Data:")
+    print(training_data.head())
+    print(f"{train_rows} rows x {train_cols} columns")
+    print("Test Data:")
+    print(testing_data.head())
+    print(f"{test_rows} rows x {test_cols} columns")
     # Preprocess all texts stored in both datasets
     print("\n>>> Preprocessing tweets...")
     text_preprocessor = Text_Preprocessor()
     training_data.TweetText = training_data.TweetText.apply(text_preprocessor.preprocessing)
     testing_data.TweetText = testing_data.TweetText.apply(text_preprocessor.preprocessing)
+    (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
+    print("train Data:")
+    print(training_data.head())
+    print(f"{train_rows} rows x {train_cols} columns")
+    print("Test Data:")
+    print(testing_data.head())
+    print(f"{test_rows} rows x {test_cols} columns")
     # Extract all possible features
     print("\n>>> Extracting features...")
     features_generator = Features_Generator()
     training_data, testing_data = features_generator.fit(training_data, testing_data, 'TweetText')
+    (train_rows, train_cols), (test_rows, test_cols) = training_data.shape, testing_data.shape
+    print("train Data:")
+    print(training_data.head())
+    print(f"{train_rows} rows x {train_cols} columns")
+    print("Test Data:")
+    print(testing_data.head())
+    print(f"{test_rows} rows x {test_cols} columns")
     # Build the prediction model.
     print("\n>>> Building prediction model...")
     # - Define features and the target variables.
@@ -76,8 +97,12 @@ def test():
     # label [0 for 'Politics' and 1 for 'Sports']).
     result['Label'] = np.array(['Politics' if y_testing_predected == 0 else 'Sports' for y_testing_predected in y_testing_pred])
     # Fianly we save the result to a csv file.
+    print("\n>>> Done!")
     result.set_index('TweetId', inplace=True)
+    print("\nFinal result:")
+    print(result)
     result.to_csv('../data/submission.csv')
+    print("\nThe result is saved to data/submission.csv")
 
 def main():
     start_time = time.time()
